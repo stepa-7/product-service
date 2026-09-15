@@ -11,4 +11,3 @@ plugins {
 }
 
 rootProject.name = "product-service"
-include("app")

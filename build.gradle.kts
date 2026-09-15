@@ -21,20 +21,32 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.liquibase:liquibase-core")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    compileOnly("org.projectlombok:lombok")
-    runtimeOnly("org.postgresql:postgresql")
-    annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
+    // Kafka
+    implementation("org.springframework.kafka:spring-kafka")
     testImplementation("org.springframework.kafka:spring-kafka-test")
+
+    // Liquibase
+    implementation("org.liquibase:liquibase-core")
+
+    // Postgresql
+    runtimeOnly("org.postgresql:postgresql")
+
+    // Testcontainers
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:kafka")
     testImplementation("org.testcontainers:postgresql")
+
+    // Lombok
+    compileOnly("org.projectlombok:lombok")
     testCompileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
 
     // Валидация
@@ -47,6 +59,7 @@ dependencies {
 
     // OpenAPI UI (Swagger)
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.9.1")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.11")
 
     // Use JUnit Jupiter for testing.
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

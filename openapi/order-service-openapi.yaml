@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: Пример API
+  description: Шаблон для описания REST API
+  version: 1.0.0
+servers:
+  - url: https://example.com
+paths:
+  /users:
+    get:
+      summary: Получить список пользователей
+      operationId: getUsers
+      parameters:
+        - name: limit
+          in: query
+          description: Количество элементов на странице
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Неверный запрос
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: имя пользователя
+          example: Иван
