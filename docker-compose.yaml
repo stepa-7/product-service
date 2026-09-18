@@ -1,0 +1,11 @@
+services:
+
+  product-db:
+    image: postgres:16
+    container_name: product-db
+    environment:
+      POSTGRES_DB: product_service
+      POSTGRES_USER: product_service_user
+      POSTGRES_PASSWORD: product123
+    ports:
+      - "5432:5432"
