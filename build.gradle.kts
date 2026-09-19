@@ -10,6 +10,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.16"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.openapi.generator") version "7.25.0"
 }
 
 group = "org.productservice"
@@ -75,4 +76,36 @@ java {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+
+
+openApiGenerate {
+    generatorName.set("spring")
+    inputSpec.set("$rootDir/src/main/resources/openapi/order-service-openapi.yaml")
+    outputDir.set(layout.buildDirectory.dir("generated/openapi").get().asFile.path)
+
+    apiPackage.set("org.productservice.api")
+    modelPackage.set("org.productservice.model")
+
+    configOptions.set(mapOf(
+        "interfaceOnly" to "true",
+        "useSpringBoot3" to "true",
+        "skipDefaultInterface" to "true",
+        "useBeanValidation" to "true",
+        "dateLibrary" to "java8-localdatetime",
+        "openApiNullable" to "false"
+    ))
+}
+
+tasks.named("compileJava") {
+    dependsOn(tasks.named("openApiGenerate"))
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("${layout.buildDirectory.get().asFile.path}/generated/openapi/src/main/java")
+        }
+    }
 }
