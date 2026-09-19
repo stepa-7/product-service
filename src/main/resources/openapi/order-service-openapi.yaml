@@ -1,42 +1,263 @@
 openapi: 3.0.3
 info:
-  title: Пример API
-  description: Шаблон для описания REST API
+  title: Product Service API
   version: 1.0.0
+  description: API для управления товарами.
 servers:
-  - url: https://example.com
+  - url: http://localhost:8081/api/v1
+    description: Локальный сервер Product Service
 paths:
-  /users:
+  /products:
     get:
-      summary: Получить список пользователей
-      operationId: getUsers
-      parameters:
-        - name: limit
-          in: query
-          description: Количество элементов на странице
-          required: false
-          schema:
-            type: integer
-            default: 10
+      summary: Получение списка товаров
+      operationId: getProducts
       responses:
         '200':
-          description: Успешный ответ
+          description: Успешный ответ с информацией о товарах
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/ProductDto'
         '400':
-          description: Неверный запрос
+          description: Некорректный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Товар не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Конфликт данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /products/{id}:
+    get:
+      summary: Получение товара по ID
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Уникальный идентификатор товара (UUID)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Успешный ответ с информацией о товаре
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Некорректный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Товар не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Конфликт данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Удаление товара по ID
+      operationId: deleteProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Уникальный идентификатор товара (UUID)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Товар успешно удален
+        '400':
+          description: Некорректный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Товар не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Конфликт данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /products/{id}/status:
+    patch:
+      summary: Изменение статуса товара
+      operationId: updateProductStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Уникальный идентификатор товара (UUID)
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductStatusRequest'
+      responses:
+        '200':
+          description: Статус обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '404':
+          description: Товар не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Конфликт данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    User:
+    ProductDto:
       type: object
       properties:
         id:
-          type: integer
-          example: 1
+          type: string
+          format: uuid
+          description: Уникальный идентификатор товара
+          readOnly: true
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
         name:
-          type: имя пользователя
-          example: Иван
+          type: string
+          description: Название товара
+          example: "MacBook Pro 14"
+          nullable: false
+        description:
+          type: string
+          description: Описание товара
+          example: "Laptop Apple MacBook Pro"
+        category:
+          type: string
+          description: Категория товара
+          example: "LAPTOP"
+        price:
+          type: number
+          format: BigDecimal
+          description: Цена
+          readOnly: true
+          example: 1250.50
+          nullable: false
+        currency:
+          type: string
+          description: Валюта
+          example: "EUR"
+          nullable: false
+        status:
+          $ref: '#/components/schemas/ProductStatus'
+        createdAt:
+          type: string
+          format: date-time
+          description: Дата создания
+          readOnly: true
+          example: "2023-10-27T10:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: Дата последнего изменения
+          readOnly: true
+          example: "2023-10-27T10:30:00Z"
+        version:
+          type: integer
+          format: int64
+          description: Версия сущности
+          example: 2
+
+    ProductStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - OUT_OF_STOCK
+      description: Статус товара
+      nullable: false
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2023-10-27T10:00:00Z"
+        status:
+          type: integer
+          example: 404
+        error:
+          type: string
+          example: "PRODUCT_NOT_FOUND"
+        message:
+          type: string
+          example: "Product with id 3c16946e-d1a8-46b3-8c45-220c43283284 not found"
+        path:
+          type: string
+          example: "/api/v1/products/3c16946e-d1a8-46b3-8c45-220c43283284"
+
+    UpdateProductStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ProductStatus'
