@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    enabled: true
+
+logging:
+  level:
+    root: WARN
+    org.productservice: INFO

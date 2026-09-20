@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changes/001-create-product-table.sql
+  - include:
+      file: db/changelog/changes/002-add-indexes.sql
