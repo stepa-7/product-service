@@ -2,6 +2,12 @@ spring:
   profiles:
     active: dev
 
+  kafka:
+    consumer:
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual
+
   application:
     name: productservice
 

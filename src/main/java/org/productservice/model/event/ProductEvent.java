@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.Instant;
+import java.util.UUID;
 
 @Builder
 @Getter
@@ -13,8 +14,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductEvent {
-    private String eventId;
-    private String eventType;
+    private UUID eventId;
+    private ProductEventType eventType;
     private Long eventVersion;
     private Instant eventTimestamp;
     private ProductEventPayload product;
