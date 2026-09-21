@@ -6,6 +6,12 @@ spring:
   liquibase:
     enabled: true
 
+  kafka:
+    admin:
+      auto-create: false
+    properties:
+      auto.create.topics.enable: false
+
 logging:
   level:
     root: WARN

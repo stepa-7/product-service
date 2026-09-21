@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/changes/001-create-product-table.sql
   - include:
       file: db/changelog/changes/002-add-indexes.sql
+  - include:
+      file: db/changelog/changes/003-create-processed-events.sql
