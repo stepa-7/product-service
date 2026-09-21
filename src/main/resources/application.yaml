@@ -5,8 +5,12 @@ spring:
   kafka:
     consumer:
       enable-auto-commit: false
+      group-id: product-service
+      auto-offset-reset: earliest
     listener:
       ack-mode: manual
+    properties:
+      auto.create.topics.enable: false
 
   application:
     name: productservice
