@@ -1,4 +1,4 @@
-package org.productservice.controller;
+package org.productservice.exception;
 
 import java.util.UUID;
 

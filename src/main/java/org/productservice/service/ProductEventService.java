@@ -2,7 +2,7 @@ package org.productservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.productservice.controller.ProductNotFoundException;
+import org.productservice.exception.ProductNotFoundException;
 import org.productservice.model.entity.ProcessedEventEntity;
 import org.productservice.model.entity.ProductEntity;
 import org.productservice.model.event.ProductEvent;
