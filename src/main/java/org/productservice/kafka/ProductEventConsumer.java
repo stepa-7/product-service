@@ -32,7 +32,7 @@ public class ProductEventConsumer {
 
         log.info("Получено событие eventId={}, productId={}, eventType={}", eventId, productId, eventType);
         try {
-            eventService.process();
+            eventService.process(event);
             ack.acknowledge();
         } catch (Exception ex) {
             log.error("Ошибка при обработке события eventId={}, productId={}, eventType={}, reason={}",
