@@ -2,16 +2,6 @@ spring:
   profiles:
     active: dev
 
-  kafka:
-    consumer:
-      enable-auto-commit: false
-      group-id: product-service
-      auto-offset-reset: earliest
-    listener:
-      ack-mode: manual
-    properties:
-      auto.create.topics.enable: false
-
   application:
     name: productservice
 
@@ -30,3 +20,12 @@ spring:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
+app:
+  kafka:
+    log-payload: true
+  product-consumer-properties:
+    enabled: true
+    topic: "product-events"
+    group-id: "product-service"
+    consumer-count: 3
+    consumer-max-poll-records: 500

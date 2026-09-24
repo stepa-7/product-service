@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "org.productservice"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     // Use Maven Central for resolving dependencies.
