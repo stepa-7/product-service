@@ -1,0 +1,71 @@
+databaseChangeLog:
+   - changeSet:
+        id: 001-create-product-table
+        author: schum
+        comment: Создание таблицы товаров
+        changes:
+           - createTable:
+                tableName: product
+                remarks: Таблица товаров
+                columns:
+                   - column:
+                        name: id
+                        type: UUID
+                        remarks: Уникальный идентификатор
+                        constraints:
+                           primaryKey: true
+                           primaryKeyName: product_pkey
+                        defaultValueComputed: gen_random_uuid()
+                   - column:
+                        name: name
+                        type: VARCHAR(255)
+                        remarks: Название товара
+                        constraints:
+                           nullable: false
+                           checkConstraint: length(name) >= 1
+                   - column:
+                        name: description
+                        type: VARCHAR(255)
+                        remarks: Описание товара
+                   - column:
+                        name: category
+                        type: VARCHAR(255)
+                        remarks: Категория
+                   - column:
+                        name: price
+                        type: DECIMAL(19, 2)
+                        remarks: Цена
+                        constraints:
+                           nullable: false
+                           checkConstraint: price >= 0
+                   - column:
+                        name: currency
+                        type: VARCHAR(255)
+                        remarks: Валюта, например EUR
+                        constraints:
+                           nullable: false
+                   - column:
+                        name: status
+                        type: VARCHAR(20)
+                        remarks: Статус товара
+                        constraints:
+                           nullable: false
+                           checkConstraint: "status in ('ACTIVE', 'INACTIVE', 'OUT_OF_STOCK')"
+                   - column:
+                        name: created_at
+                        type: TIMESTAMPTZ
+                        remarks: Дата создания
+                   - column:
+                        name: updated_at
+                        type: TIMESTAMPTZ
+                        remarks: Дата последнего изменения
+                   - column:
+                        name: version
+                        type: BIGINT
+                        remarks: Версия сущности
+                        constraints:
+                           nullable: false
+                        defaultValueNumeric: 0
+        rollback:
+           - dropTable:
+                tableName: product

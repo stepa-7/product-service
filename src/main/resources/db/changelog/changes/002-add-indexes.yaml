@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-add-indexes
+      author: schum
+      comment: Создание индексов
+      changes:
+        - createIndex:
+            indexName: idx_product_category
+            tableName: product
+            columns:
+              - column:
+                  name: category
+        - createIndex:
+            indexName: idx_product_status
+            tableName: product
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            indexName: idx_product_price
+            tableName: product
+            columns:
+              - column:
+                  name: price
+        - createIndex:
+            indexName: idx_product_created_at
+            tableName: product
+            columns:
+              - column:
+                  name: created_at
+      rollback:
+        - dropIndex:
+            indexName: idx_product_category
+            tableName: product
+        - dropIndex:
+            indexName: idx_product_status
+            tableName: product
+        - dropIndex:
+            indexName: idx_product_price
+            tableName: product
+        - dropIndex:
+            indexName: idx_product_created_at
+            tableName: product
