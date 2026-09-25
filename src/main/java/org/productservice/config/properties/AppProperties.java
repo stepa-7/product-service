@@ -28,7 +28,7 @@ public class AppProperties {
 
     @Valid
     @NotNull
-    private ProductConsumerProperties productConsumerProperties= new ProductConsumerProperties();
+    private ProductConsumerProperties productConsumerProperties=  new ProductConsumerProperties();
 
     @Data
     public static class ProductConsumerProperties {
@@ -46,5 +46,22 @@ public class AppProperties {
 
         @NotNull
         private Integer consumerMaxPollRecords;
+
+        @NotNull
+        private Long retryBackOff;
+
+        @NotNull
+        private Long retryAttempts;
+
+        @NotBlank
+        private String dltTopicName;
+
+        @NotNull
+        private Integer dltPartitions;
+
+        @NotNull
+        private Integer dltReplicas;
     }
+
+
 }

@@ -29,3 +29,13 @@ app:
     group-id: "product-service"
     consumer-count: 3
     consumer-max-poll-records: 500
+    retry-back-off: 2000
+    retry-attempts: 3
+    dlt-topic-name: ${app.product-consumer-properties.topic}.DLT
+    dlt-partitions: 3
+    dlt-replicas: 1
+  infra:
+    kafka:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+
+

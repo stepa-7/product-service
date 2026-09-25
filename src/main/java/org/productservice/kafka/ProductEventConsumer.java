@@ -7,9 +7,7 @@ import org.productservice.model.event.ProductEvent;
 import org.productservice.model.event.ProductEventType;
 import org.productservice.service.ProductEventService;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,11 +20,6 @@ public class ProductEventConsumer {
     private final ProductEventService eventService;
     private final AppProperties appProperties;
 
-//    @RetryableTopic(
-//            attempts = "4",
-//            backoff = @Backoff(delay = 2000, multiplier = 2),
-//            dltTopicSuffix = ".DLT"
-//    )
     @KafkaListener(topics = "${app.product-consumer-properties.topic}", containerFactory = "productConsumerFactory")
     public void consume(List<ProductEvent> events, Acknowledgment ack) {
         for (ProductEvent event : events) {
