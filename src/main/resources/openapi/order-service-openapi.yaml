@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Product Service API
-  version: 1.0.1
+  version: 1.0.2
   description: API для управления товарами.
 servers:
   - url: http://localhost:8080/api/v1
@@ -244,6 +244,15 @@ components:
   schemas:
     ProductDto:
       type: object
+      required:
+        - id
+        - name
+        - price
+        - currency
+        - status
+        - createdAt
+        - updatedAt
+        - version
       properties:
         id:
           type: string
@@ -265,7 +274,6 @@ components:
           example: "LAPTOP"
         price:
           type: number
-          format: double
           description: Цена
           example: 1250.50
           nullable: false
@@ -291,15 +299,6 @@ components:
           format: int64
           description: Версия сущности
           example: 2
-
-    ProductStatus:
-      type: string
-      enum:
-        - ACTIVE
-        - INACTIVE
-        - OUT_OF_STOCK
-      description: Статус товара
-      nullable: false
 
     ErrorResponse:
       type: object
@@ -362,3 +361,92 @@ components:
           format: uuid
         status:
           $ref: '#/components/schemas/ProductStatus'
+    ProductStatus:
+      type: string
+      enum: [ ACTIVE, INACTIVE, OUT_OF_STOCK ]
+      description: Статус товара
+      nullable: false
+
+
+    ProductEvent:
+      type: object
+      required:
+        - id
+        - eventType
+        - eventVersion
+        - eventTimestamp
+        - product
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Уникальный идентификатор события
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+          nullable: false
+        eventType:
+          $ref: '#/components/schemas/ProductEventType'
+        eventVersion:
+          type: integer
+          format: int64
+          description: Версия события
+          example: 2
+        eventTimestamp:
+          type: string
+          format: date-time
+          description: Дата события
+          example: "2023-10-27T10:00:00Z"
+        product:
+          $ref: '#/components/schemas/ProductEventPayload'
+
+    ProductEventType:
+      type: string
+      enum:
+        - PRODUCT_CREATED
+        - PRODUCT_UPDATED
+      description: Тип события
+
+    ProductEventPayload:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - currency
+        - status
+        - version
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Уникальный идентификатор товара
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+        name:
+          type: string
+          description: Название товара
+          example: "MacBook Pro 14"
+          nullable: false
+        description:
+          type: string
+          description: Описание товара
+          example: "Laptop Apple MacBook Pro"
+        category:
+          type: string
+          description: Категория товара
+          example: "LAPTOP"
+        price:
+          type: number
+          description: Цена
+          example: 1250.50
+          nullable: false
+        currency:
+          type: string
+          description: Валюта
+          example: "EUR"
+          nullable: false
+        status:
+          $ref: '#/components/schemas/ProductStatus'
+        version:
+          type: integer
+          format: int64
+          description: Версия сущности
+          example: 2

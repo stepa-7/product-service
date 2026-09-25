@@ -1,0 +1,34 @@
+databaseChangeLog:
+   - changeSet:
+        id: 003-create-processed-events
+        author: schum
+        comment: Создание таблицы обработанных событий
+        changes:
+           - createTable:
+                tableName: processed_events
+                remarks: Таблица обработанных событий
+                columns:
+                   - column:
+                        name: event_id
+                        type: UUID
+                        remarks: ID события
+                        constraints:
+                           primaryKey: true
+                           primaryKeyName: processed_events_pkey
+                   - column:
+                        name: event_type
+                        type: VARCHAR(50)
+                        remarks: Тип события
+                        constraints:
+                           nullable: false
+                           checkConstraint: "event_type in ('PRODUCT_CREATED', 'PRODUCT_UPDATED')"
+                   - column:
+                        name: processed_at
+                        type: TIMESTAMPTZ
+                        remarks: Дата обработки события
+                        constraints:
+                           nullable: false
+                        defaultValueComputed: now()
+        rollback:
+           - dropTable:
+                tableName: processed_events
