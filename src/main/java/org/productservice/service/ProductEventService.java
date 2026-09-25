@@ -34,10 +34,11 @@ public class ProductEventService {
             return;
         }
 
-        if (eventType.equals(ProductEventType.PRODUCT_CREATED)) {
-            handleCreate(event);
-        } else if (eventType.equals(ProductEventType.PRODUCT_UPDATED)) {
-            handleUpdate(event);
+        switch (eventType) {
+            case ProductEventType.PRODUCT_CREATED:
+                handleCreate(event);
+            case ProductEventType.PRODUCT_UPDATED:
+                handleUpdate(event);
         }
 
         log.info("Событие успешно обработано eventId={}", eventId);
