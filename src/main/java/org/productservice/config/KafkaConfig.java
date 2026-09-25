@@ -7,7 +7,7 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.UUIDDeserializer;
 import org.productservice.config.properties.AppProperties;
 import org.productservice.config.properties.InfraProperties;
-import org.productservice.model.event.ProductEvent;
+import org.productservice.model.ProductEvent;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

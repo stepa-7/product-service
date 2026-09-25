@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.productservice.exception.ProductNotFoundException;
 import org.productservice.model.entity.ProcessedEventEntity;
 import org.productservice.model.entity.ProductEntity;
-import org.productservice.model.event.ProductEvent;
-import org.productservice.model.event.ProductEventPayload;
-import org.productservice.model.event.ProductEventType;
+import org.productservice.model.ProductEvent;
+import org.productservice.model.ProductEventPayload;
+import org.productservice.model.ProductEventType;
 import org.productservice.repository.ProcessedEventRepository;
 import org.productservice.repository.ProductRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,7 +29,7 @@ public class ProductEventService {
     public void process(ProductEvent event) {
         validateEvent(event);
 
-        UUID eventId = event.getEventId();
+        UUID eventId = event.getId();
         ProductEventType eventType = event.getEventType();
 
         log.info("Начата обработка события eventId={}", eventId);
@@ -49,7 +49,7 @@ public class ProductEventService {
 
         try {
             eventRepository.save(ProcessedEventEntity.builder()
-                    .eventId(event.getEventId())
+                    .eventId(event.getId())
                     .eventType(event.getEventType())
                     .processedAt(Instant.now())
                     .build());
@@ -71,8 +71,6 @@ public class ProductEventService {
                     .price(productEventPayload.getPrice())
                     .currency(productEventPayload.getCurrency())
                     .status(productEventPayload.getStatus())
-                    .createdAt(productEventPayload.getCreatedAt())
-                    .updatedAt(productEventPayload.getUpdatedAt())
                     .version(productEventPayload.getVersion())
                 .build());
 
@@ -117,7 +115,7 @@ public class ProductEventService {
     private void validateEvent(ProductEvent event) {
         if (
                 event == null ||
-                event.getEventId() == null ||
+                event.getId() == null ||
                 event.getEventType() == null ||
                 event.getEventVersion() == null ||
                 event.getProduct() == null ||

@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.productservice.model.event.ProductEventType;
+import org.productservice.model.ProductEventType;
 
 import java.time.Instant;
 import java.util.UUID;
