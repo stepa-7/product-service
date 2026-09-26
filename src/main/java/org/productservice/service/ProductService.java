@@ -3,12 +3,17 @@ package org.productservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.productservice.exception.ProductNotFoundException;
+import org.productservice.model.ProductDto;
 import org.productservice.model.ProductEventPayload;
+import org.productservice.model.ProductStatus;
+import org.productservice.model.ProductsPageResponse;
+import org.productservice.model.UpdateProductStatusResponse;
 import org.productservice.model.entity.ProductEntity;
 import org.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +23,22 @@ import java.util.UUID;
 @Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
+
+    public void deleteProduct(UUID id) {
+        return;
+    }
+
+    public ProductDto getProductById(UUID id) {
+        return new ProductDto();
+    }
+
+    public ProductsPageResponse getProducts(Integer page, Integer size, String sort, String direction, String name, String category, ProductStatus status, BigDecimal minPrice, BigDecimal maxPrice) {
+        return new ProductsPageResponse();
+    }
+
+    public UpdateProductStatusResponse updateProductStatus(UUID id, ProductStatus status) {
+        return new UpdateProductStatusResponse();
+    }
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void createFromEvent(ProductEventPayload productEventPayload) {
