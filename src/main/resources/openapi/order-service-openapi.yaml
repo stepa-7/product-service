@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Product Service API
-  version: 1.0.2
+  version: 1.0.3
   description: API для управления товарами.
 servers:
   - url: http://localhost:8080/api/v1
@@ -74,7 +74,6 @@ paths:
           description: Фильтрация по цене
           schema:
             type: number
-            format: double
             minimum: 0
         - name: maxPrice
           in: query
@@ -82,7 +81,6 @@ paths:
           description: Фильтрация по цене
           schema:
             type: number
-            format: double
             minimum: 0
       responses:
         '200':
