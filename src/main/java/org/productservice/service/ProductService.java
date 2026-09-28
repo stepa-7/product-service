@@ -2,6 +2,8 @@ package org.productservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.productservice.exception.ConflictException;
+import org.productservice.exception.InvalidSortFieldException;
 import org.productservice.exception.ProductNotFoundException;
 import org.productservice.mapper.ProductMapper;
 import org.productservice.model.ProductDto;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -49,6 +52,11 @@ public class ProductService {
     }
 
     public ProductsPageResponse getProducts(Integer page, Integer size, String sortBy, String direction, String name, String category, ProductStatus status, BigDecimal minPrice, BigDecimal maxPrice) {
+        Set<String> ALLOWED = Set.of("name", "price", "createdAt", "updatedAt");
+        if (sortBy == null || !ALLOWED.contains(sortBy)) {
+            throw new InvalidSortFieldException(sortBy);
+        }
+
         Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<ProductDto> pageProductDto = getFilteredProducts(pageable, name, category, status, minPrice, maxPrice);
@@ -115,8 +123,7 @@ public class ProductService {
         UUID productId = productEventPayload.getId();
 
         if (productRepository.existsById(productId)) {
-            log.info("Товар уже создан productId={}", productId);
-            return;
+            throw new ConflictException("Товар уже существует: " + productId);
         }
 
         ProductEntity entity = productMapper.toEntityFromEvent(productEventPayload);
