@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setError(errorCode);
         errorResponse.setStatus(status.value());
-        errorResponse.setTimestamp(LocalDateTime.now());
+        errorResponse.setTimestamp(OffsetDateTime.now());
         errorResponse.setMessage(ex.getMessage());
         errorResponse.setPath(request.getRequestURI());
         return ResponseEntity.status(status)
