@@ -93,7 +93,7 @@ openApiGenerate {
         "useSpringBoot3" to "true",
         "skipDefaultInterface" to "true",
         "useBeanValidation" to "true",
-        "dateLibrary" to "java8-localdatetime",
+        "dateLibrary" to "java8",
         "openApiNullable" to "false"
     ))
 }
