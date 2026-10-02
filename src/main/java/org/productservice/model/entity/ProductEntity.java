@@ -32,7 +32,6 @@ import java.util.UUID;
 public class ProductEntity {
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "name", nullable = false)
@@ -62,7 +61,7 @@ public class ProductEntity {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @Version
+    @Builder.Default
     @Column(name = "version", nullable = false)
     private Long version = 0L;
 }

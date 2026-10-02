@@ -16,12 +16,10 @@ public interface ProductMapper {
     ProductEntity toEntity(ProductDto productDto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     void updateEntityFromEvent(ProductEventPayload payload, @MappingTarget ProductEntity entity);
 
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     ProductEntity toEntityFromEvent(ProductEventPayload payload);
 

@@ -129,13 +129,8 @@ public class ProductService {
         ProductEntity entity = productMapper.toEntityFromEvent(productEventPayload);
         entity.setUpdatedAt(Instant.now());
 
-        try {
-            productRepository.save(entity);
-            log.info("Товар успешно создан productId={}", productId);
-        }
-        catch (DataIntegrityViolationException e) {
-            log.info("Товар уже создан (race) productId={}", productId);
-        }
+        productRepository.save(entity);
+        log.info("Товар успешно создан productId={}", productId);
     }
 
     @Transactional(propagation = Propagation.MANDATORY)

@@ -6,15 +6,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 import java.time.OffsetDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(
+    public ResponseEntity<ErrorResponse> handleNotFoundProduct(
             ProductNotFoundException ex,
             HttpServletRequest request) {
         return build("PRODUCT_NOT_FOUND", HttpStatus.NOT_FOUND, ex, request);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundResource(
+            NoResourceFoundException ex,
+            HttpServletRequest request) {
+        return build("RESOURCE_NOT_FOUND", HttpStatus.NOT_FOUND, ex, request);
     }
 
     @ExceptionHandler(Exception.class)

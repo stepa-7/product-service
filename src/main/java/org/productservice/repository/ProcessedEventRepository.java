@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface ProcessedEventRepository extends JpaRepository<ProcessedEventEntity, UUID> {
     boolean existsProcessedEventEntityByEventId(UUID eventId);
-
+    long countByEventId(UUID eventId);
 }

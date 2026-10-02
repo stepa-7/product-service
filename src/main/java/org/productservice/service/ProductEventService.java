@@ -35,10 +35,8 @@ public class ProductEventService {
         }
 
         switch (eventType) {
-            case ProductEventType.PRODUCT_CREATED:
-                handleCreate(event);
-            case ProductEventType.PRODUCT_UPDATED:
-                handleUpdate(event);
+            case ProductEventType.PRODUCT_CREATED -> handleCreate(event);
+            case ProductEventType.PRODUCT_UPDATED -> handleUpdate(event);
         }
 
         log.info("Событие успешно обработано eventId={}", eventId);

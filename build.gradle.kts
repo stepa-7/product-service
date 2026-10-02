@@ -43,6 +43,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:kafka")
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.awaitility:awaitility")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")
