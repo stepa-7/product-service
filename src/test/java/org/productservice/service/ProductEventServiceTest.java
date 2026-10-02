@@ -38,6 +38,8 @@ class ProductEventServiceTest {
         ProductEventPayload payload = new ProductEventPayload(
                 id,
                 "MacBook Pro 14",
+                "Laptop Apple",
+                "LAPTOP",
                 BigDecimal.valueOf(100),
                 "USD",
                 ProductStatus.ACTIVE,
@@ -59,6 +61,8 @@ class ProductEventServiceTest {
         ProductEventPayload payload = new ProductEventPayload(
                 id,
                 "MacBook Pro 14",
+                "Laptop Apple",
+                "LAPTOP",
                 BigDecimal.valueOf(100),
                 "USD",
                 ProductStatus.ACTIVE,
